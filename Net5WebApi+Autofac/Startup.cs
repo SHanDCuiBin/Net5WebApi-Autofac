@@ -1,3 +1,4 @@
+using Autofac;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
@@ -6,6 +7,8 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
+using Net5WebApi_Autofac.IService;
+using Net5WebApi_Autofac.Service;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -51,6 +54,18 @@ namespace Net5WebApi_Autofac
             {
                 endpoints.MapControllers();
             });
+        }
+
+
+        public void ConfigureContainer(ContainerBuilder builder)
+        {
+            builder.RegisterType<TestServiceA>().As<ITestServiceA>();
+            builder.RegisterType<TestServiceB>().OnActivated(e =>
+                     e.Instance.SetService(e.Context.Resolve<ITestServiceA>())
+            ).As<ITestServiceB>();
+            builder.RegisterType<TestServiceC>().As<ITestServiceC>();
+            builder.RegisterType<TestServiceD>().As<ITestServiceD>();
+
         }
     }
 }

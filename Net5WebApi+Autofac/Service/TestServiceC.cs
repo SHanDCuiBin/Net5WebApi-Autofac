@@ -6,20 +6,12 @@ using System.Threading.Tasks;
 
 namespace Net5WebApi_Autofac.Service
 {
-    public class TestServiceB : ITestServiceB
+    public class TestServiceC : ITestServiceC
     {
-        private ITestServiceA _testServiceA;
-
-        public void SetService(ITestServiceA testServiceA)
-        {
-            _testServiceA = testServiceA;
-        }
-
-        public TestServiceB()
+        public TestServiceC()
         {
             Console.WriteLine($"{this.GetType().Name} 被构造了...");
         }
-
         public void Show()
         {
              Console.WriteLine($"This is a {this.GetType().Name} Instance...");
